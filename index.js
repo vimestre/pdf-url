@@ -67,7 +67,7 @@ app.get('/Contrato/:uuid', (req, res) => {
 
     // Si lo tenemos en memoria, devolvemos una redirección a la url original
     if (cache) {
-        res.send(`
+        /*res.send(`
             <!DOCTYPE html>
             <html>
             <head>
@@ -85,7 +85,8 @@ app.get('/Contrato/:uuid', (req, res) => {
                     <embed src="${cache.url}">
             </body>
             </html>`
-        )
+        )*/
+        res.redirect(cache.url);
     }
     // En caso contrario, informamos al usuario
     else res.send('Enlace no disponible o cadudado')
