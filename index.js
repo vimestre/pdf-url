@@ -74,8 +74,10 @@ app.get('/Contrato/:uuid', (req, res) => {
                     <title>Contrato de compraventa de citricos</title>
                     <meta property="og:site_name" content="CONTRATO COMPRAVENTA">
                     <meta property="og:title" content="CONTRATO COMPRAVENTA" />
-                    <meta property="og:description" content="Contrato de compraventa de ${cache.variedad} entre ${cache.sociedad} y ${cache.prov}" />
+                    <meta property="og:description" content="Contrato de compraventa de ${cache.variedad ?? 'CÍTRICOS'} entre ${cache.sociedad ?? 'COMPRADOR'} y ${cache.prov ?? 'VENDEDOR'}" />
                     <meta property="og:image" itemprop="image" content="https://canamas.com/wp-content/uploads/2019/09/Recurso-38.png">
+                    <meta property="og:image:width" content="65" />
+                    <meta property="og:image:height" content="65" />
                     <meta property="og:type" content="website" />
                     <meta http-equiv = "refresh" content = "2; url = ${cache.url}" />
             </head>
