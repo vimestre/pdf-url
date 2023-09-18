@@ -35,8 +35,12 @@ app.post('/Short', (req, res) => {
 //Get a /Contrato/uuid para obtener una redicción a la url original
 app.get('/Contrato/:uuid', (req, res) => {
 
+
     // Comprabamos que tenemos ese uuid en memoria
     let uuid = req.params.uuid;
+
+    //console.log("Getting: " + uuid)
+
     let cache = urls.find(u => u.uuid === uuid)
 
     // Si existe, hay que revisar que no haya caducado
@@ -55,8 +59,27 @@ app.get('/Contrato/:uuid', (req, res) => {
     }
 
     // Si lo tenemos en memoria, devolvemos una redirección a la url original
-    if (cache) res.redirect(cache.url);
-
+    if (cache) {
+        res.send(`
+<!DOCTYPE html>
+<html>
+   <head>
+      <title>Contrato de compraventa de citricos</title>
+      <meta property="og:site_name" content="Contrato de compraventa de citricos">
+    <meta property="og:title" content="Contrato de compraventa de citricos" />
+    <meta property="og:description" content="Contrato de compraventa de citricos" />
+    <!--<meta property="og:image" itemprop="image" content="http://pollosweb.wesped.es/programa_pollos/play.png">-->
+    <meta property="og:type" content="website" />
+    <meta property="og:updated_time" content="1440432930" />
+      <meta http-equiv = "refresh" content = "2; url = ${cache.url}" />
+   </head>
+   <body>
+      <p>Redirigiendo al fichero...</p>
+   </body>
+</html>
+        `)
+        //res.redirect(cache.url);
+    }
     // En caso contrario, informamos al usuario
     else res.send('Enlace no disponible o cadudado')
 })
