@@ -25,7 +25,14 @@ app.post('/Short', (req, res) => {
     let uuid = crypto.randomUUID();
 
     //2-> Guardamos el uuid, la fecha de generación y la url original en la caché
-    urls.push({ uuid: uuid, url: req.body.url, time: Date.now() });
+    urls.push({
+        uuid: uuid,
+        url: req.body.url,
+        prov: req.body.prov,
+        sociedad: req.body.sociedad,
+        variedad: req.body.variedad,
+        time: Date.now()
+    });
 
     //3-> Devolvemos el uuid
     res.send(JSON.stringify({ uuid: uuid }));
@@ -61,24 +68,22 @@ app.get('/Contrato/:uuid', (req, res) => {
     // Si lo tenemos en memoria, devolvemos una redirección a la url original
     if (cache) {
         res.send(`
-<!DOCTYPE html>
-<html>
-   <head>
-      <title>Contrato de compraventa de citricos</title>
-      <meta property="og:site_name" content="Contrato de compraventa de citricos">
-    <meta property="og:title" content="Contrato de compraventa de citricos" />
-    <meta property="og:description" content="Contrato de compraventa de citricos" />
-    <!--<meta property="og:image" itemprop="image" content="http://pollosweb.wesped.es/programa_pollos/play.png">-->
-    <meta property="og:type" content="website" />
-    <meta property="og:updated_time" content="1440432930" />
-      <meta http-equiv = "refresh" content = "2; url = ${cache.url}" />
-   </head>
-   <body>
-      <p>Redirigiendo al fichero...</p>
-   </body>
-</html>
-        `)
-        //res.redirect(cache.url);
+            <!DOCTYPE html>
+            <html>
+            <head>
+                    <title>Contrato de compraventa de citricos</title>
+                    <meta property="og:site_name" content="CONTRATO COMPRAVENTA">
+                    <meta property="og:title" content="CONTRATO COMPRAVENTA" />
+                    <meta property="og:description" content="Contrato de compraventa de ${cache.variedad} entre ${cache.sociedad} y ${cache.prov}" />
+                    <meta property="og:image" itemprop="image" content="https://canamas.com/wp-content/uploads/2019/09/Recurso-38.png">
+                    <meta property="og:type" content="website" />
+                    <meta http-equiv = "refresh" content = "2; url = ${cache.url}" />
+            </head>
+            <body>
+                    <p>Redirigiendo al fichero...</p>
+            </body>
+            </html>`
+        )
     }
     // En caso contrario, informamos al usuario
     else res.send('Enlace no disponible o cadudado')
