@@ -79,7 +79,7 @@ app.get('/Contrato/:uuid', (req, res) => {
                     <meta property="og:image:width" content="65" />
                     <meta property="og:image:height" content="65" />
                     <meta property="og:type" content="website" />
-                    <meta http-equiv = "refresh" content = "2; url = ${cache.url}" />
+                    <meta http-equiv = "refresh" content = "0; url = ${cache.url}" />
             </head>
             <body>
                     <p>Redirigiendo al fichero...</p>
